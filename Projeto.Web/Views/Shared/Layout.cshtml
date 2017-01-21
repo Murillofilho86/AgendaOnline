@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>COTI Informatica</title>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+
+</head>
+<body class="container">
+
+    <div class="well"> 
+        <h3>Projeto Agenda OnLine</h3>
+        <ul>
+            <li> <a href="/Usuario/Cadastro">Criar conta de acesso</a> </li>
+            <li> <a href="/Usuario/Login">Acessar agenda</a> </li>
+        </ul>
+    </div>
+
+    <div class="col-xs-12">
+        <!-- Local para entrar o conteudo principal das páginas -->
+        @RenderBody()
+    </div>
+
+</body>
+</html>

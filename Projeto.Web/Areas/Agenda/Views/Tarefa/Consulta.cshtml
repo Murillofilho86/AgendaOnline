@@ -1,0 +1,107 @@
+﻿@model Projeto.Web.Areas.Agenda.Models.TarefaViewModelConsulta
+
+@{
+    ViewBag.Title = "Consulta";
+    Layout = "~/Areas/Agenda/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("ConsultarTarefas", "Tarefa", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        <h4>Consulta de Tarefas na Agenda</h4>
+        <a href="/Agenda/Tarefa/Index">Voltar</a>
+        <hr />
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataInicio, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DataInicio, new { @type = "datetime-local" })
+                @Html.ValidationMessageFor(model => model.DataInicio)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataFim, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DataFim, new { @type = "datetime-local" })
+                @Html.ValidationMessageFor(model => model.DataFim)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Consultar Tarefas" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @ViewBag.Mensagem
+</div>
+
+
+<!-- Verificar se a lista de tarefas possui conteudo -->
+@if(Model != null && Model.Tarefas != null && Model.Tarefas.Count > 0)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Titulo da Tarefa</th>
+                <th>Data da Tarefa</th>
+                <th>Status</th>
+                <th>Tipo</th>
+                <th>Descrição</th>
+                <th>Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(var t in Model.Tarefas)
+            {
+                <tr>
+                    <td> @t.IdTarefa </td>
+                    <td> @t.Titulo </td>
+                    <td> @t.DataHora </td>
+                    <td> @t.Status </td>
+                    <td> @t.Tipo </td>
+                    <td> @t.Descricao </td>
+                    <td> 
+                        @Html.ActionLink("Excluir", "ExcluirTarefa",
+                                         new { id = @t.IdTarefa },
+                                         new { @class = "btn btn-danger btn-sm" }) 
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7"> Quantidade de Tarefas: @Model.Tarefas.Count </td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <!-- Área de formulário HTML -->
+    <form method="post" action="/Agenda/Tarefa/GerarRelatorio">
+        
+        Exportar dados da Agenda:
+        <select name="Tipo">
+            <option value="0">- Escolha uma Opção -</option>
+            <option value="1">PDF</option>
+            <option value="2">Word</option>
+            <option value="3">Excel</option>
+        </select>
+
+        <input type="submit" value="Gerar Relatório"/>
+
+    </form>
+    
+}
+

@@ -1,0 +1,51 @@
+﻿@model Projeto.Web.Models.UsuarioViewModelLogin
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+@using (Html.BeginForm("AutenticarUsuario", "Usuario", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+
+        <h4>Acessar Agenda</h4>
+        Para autenticar-se, informe os dados abaixo:
+        <hr />
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Login)
+                @Html.ValidationMessageFor(model => model.Login)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Senha, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Senha)
+                @Html.ValidationMessageFor(model => model.Senha)
+            </div>
+        </div>
+
+        <div>
+            @Html.CheckBoxFor(model => model.ManterConectado)
+            @Html.LabelFor(model => model.ManterConectado)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Acessar Agenda" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @ViewBag.Mensagem
+</div>

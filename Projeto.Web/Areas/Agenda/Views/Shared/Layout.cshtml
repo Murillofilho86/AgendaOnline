@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Agenda</title>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+
+</head>
+<body class="container">
+
+    <div class="row well"> 
+        <div class="col-md-6">
+            <h3>Agenda de Tarefas</h3>
+            Seja bem vindo à sua Agenda OnLine            
+        </div>
+        <div class="col-md-6">
+
+            @using Projeto.Web.Models
+            @using Newtonsoft.Json
+
+            @{
+                string ticket = HttpContext.Current.User.Identity.Name;
+                UsuarioAutenticado auth = JsonConvert.DeserializeObject<UsuarioAutenticado>(ticket);
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="/Images/@auth.Foto" width="100" height="100" class="img-circle"
+                             style="border: 1px solid #000" />
+                    </div>
+                    <div class="col-md-9">
+                        Nome: <label> @auth.Nome </label> <br/>
+                        Email: <label> @auth.Email </label> <br />
+                        Login: <label> @auth.Login </label> <br />
+                        Acesso em: <label> @auth.DataHoraAcesso </label> <br />
+                        <a href="/Usuario/Logout" class="btn btn-danger btn-sm">Sair do Sistema</a>
+                    </div>
+                </div>
+            }
+
+        </div>        
+    </div>
+
+    @RenderBody()
+
+</body>
+</html>
